@@ -1,4 +1,3 @@
-import pandas as pd
 import pandas_ta as ta
 import yfinance as yf
 
@@ -6,12 +5,8 @@ import yfinance as yf
 class Asset:
     def __init__(self, ticker: str, start: str, end: str):
         self.ticker = ticker
-        self.df = self.fetch_data(start, end)
+        self.df = yf.Ticker(ticker).history(start=start, end=end, actions=False)
         self.calculate_technical_indicators()
-
-    def fetch_data(self, start: str, end: str) -> pd.DataFrame:
-        df = yf.download(self.ticker, start=start, end=end)
-        return df
 
     def calculate_technical_indicators(self):
         df = self.df
