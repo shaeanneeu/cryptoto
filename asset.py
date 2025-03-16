@@ -28,3 +28,6 @@ class Asset:
         df = df.join([bbands, stoch, macd])
 
         df["OBV"] = ta.obv(df["Close"], df["Volume"])
+
+        self.df = df 
+
