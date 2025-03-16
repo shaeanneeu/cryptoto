@@ -13,6 +13,8 @@ class Asset:
 
         df["EMA_50"] = ta.ema(df["Close"], length=50)
         df["EMA_200"] = ta.ema(df["Close"], length=200)
+        df["RSI"] = ta.rsi(df["Close"], length=10)
+        df["ATR"] = ta.atr(df["High"], df["Low"], df["Close"], length=7) #volatility distance 
 
         bbands = ta.bbands(df["Close"], length=20)
         bbands = bbands.rename(
