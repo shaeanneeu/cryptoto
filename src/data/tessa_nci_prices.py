@@ -19,8 +19,8 @@ def get_nasdaq_crypto_index() -> list[str]:
         list[str]: The symbols of the NASDAQ crypto index.
     '''
     return [
-        'ada', 'avax', 'eth', 'link', 
-        'ltc', 'sol', 'uni', 'btc', 'xrp'
+        'ADA-USD', 'AVAX-USD', 'ETH-USD', 'LINK-USD', 
+        'LTC-USD', 'SOL-USD', 'UNI-USD', 'BTC-USD', 'XRP-USD'
     ]
 
 def iter_crypto() -> typing.Iterator[tuple[str, str]]:

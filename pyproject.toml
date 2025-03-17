@@ -3,7 +3,11 @@ name = "cryptoto"
 version = "0.1.0"
 description = ""
 authors = [
-    {name = "shotnothing",email = "shotnothing@protonmail.ch"}
+    {name = "Shae-Anne"},
+    {name = "Tong"},
+    {name = "Jing Wen"},
+    {name = "Joshua"},
+    {name = "Valerie"}
 ]
 readme = "README.md"
 requires-python = ">=3.9"
