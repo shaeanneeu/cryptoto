@@ -1,0 +1,41 @@
+[project]
+name = "cryptoto"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "shotnothing",email = "shotnothing@protonmail.ch"}
+]
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "ipykernel",
+    "ipython",
+    "matplotlib",
+    "matplotlib-inline",
+    "numpy",
+    "pandas",
+    "pendulum",
+    "pillow",
+    "platformdirs",
+    "plotly",
+    "polars",
+    "requests",
+    "scikit-learn",
+    "scipy",
+    "seaborn",
+    "six",
+    "tessa",
+    "tqdm",
+    "urllib3",
+    "yfinance",
+    "pandas_ta",
+    "lxml",
+]
+
+[tool.poetry]
+packages = [{include = "cryptoto", from = "src"}]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
