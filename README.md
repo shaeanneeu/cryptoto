@@ -20,7 +20,8 @@ Install dependancies:
 poetry install --no-root
 ```
 
-Remember to select the right interpreter (the poetry one)
+For your IDE:
+- Remember to select the right interpreter (the poetry one)
 
 ## Development
 
