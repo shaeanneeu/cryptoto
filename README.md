@@ -25,7 +25,7 @@ poetry install --no-root
 For your IDE:
 - Remember to select the right interpreter (the poetry one)
 
-(example) Installing packages
+Installing packages (example):
 ```bash
 poetry add example-package-here
 ```
