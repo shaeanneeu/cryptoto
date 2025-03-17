@@ -20,10 +20,10 @@ Install dependancies:
 poetry install --no-root
 ```
 
+## Development
+
 For your IDE:
 - Remember to select the right interpreter (the poetry one)
-
-## Development
 
 (example) Installing packages
 ```bash
