@@ -16,7 +16,7 @@ dependencies = [
     "ipython",
     "matplotlib",
     "matplotlib-inline",
-    "numpy",
+    "numpy (==1.26.4)",
     "pandas",
     "pendulum",
     "pillow",
