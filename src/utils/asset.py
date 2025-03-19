@@ -7,6 +7,9 @@ class Asset:
         self.ticker = ticker
         self.df = yf.Ticker(ticker).history(start=start, end=end, actions=False)
         self.calculate_technical_indicators()
+    
+    def get_data(self):
+        return self.df
 
     def calculate_technical_indicators(self):
         df = self.df
