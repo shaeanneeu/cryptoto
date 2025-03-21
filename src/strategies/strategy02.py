@@ -33,7 +33,7 @@ class Strategy02(Strategy):
 
             return HOLD
 
-        df["TotalSignal"] = df.progress_apply(
+        df["TotalSignal"] = df.apply(
             lambda row: total_signal(df, row.name), axis=1
         )
 

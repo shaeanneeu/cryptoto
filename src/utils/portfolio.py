@@ -8,12 +8,11 @@ class Portfolio:
         self.assets = {ticker: Asset(ticker, start, end) for ticker in tickers}
         # TODO: store proportions of assets
 
-    def get_assets(self):
-        return self.assets
-
-    def get_asset_data(self, ticker: str):
+    def get_asset(self, ticker: str) -> Asset | str:
         if ticker in self.assets.keys():
-            asset_data = self.assets[ticker].get_data()
-            return asset_data
+            return self.assets[ticker]
         else:
             return f"Asset {ticker} not in portfolio."
+
+    def get_assets(self):
+        return self.assets

@@ -1,5 +1,8 @@
+import pandas as pd
 import pandas_ta as ta
 import yfinance as yf
+
+from utils.strategy import Strategy
 
 
 class Asset:
@@ -7,8 +10,8 @@ class Asset:
         self.ticker = ticker
         self.df = yf.Ticker(ticker).history(start=start, end=end, actions=False)
         self.calculate_technical_indicators()
-    
-    def get_data(self):
+
+    def get_data(self) -> pd.DataFrame:
         return self.df
 
     def calculate_technical_indicators(self):
@@ -17,7 +20,9 @@ class Asset:
         df["EMA_50"] = ta.ema(df["Close"], length=50)
         df["EMA_200"] = ta.ema(df["Close"], length=200)
         df["RSI"] = ta.rsi(df["Close"], length=10)
-        df["ATR"] = ta.atr(df["High"], df["Low"], df["Close"], length=7) #volatility distance 
+        df["ATR"] = ta.atr(
+            df["High"], df["Low"], df["Close"], length=7
+        )  # volatility distance
 
         bbands = ta.bbands(df["Close"], length=20)
         bbands = bbands.rename(
@@ -34,5 +39,7 @@ class Asset:
 
         df["OBV"] = ta.obv(df["Close"], df["Volume"])
 
-        self.df = df 
+        self.df = df
 
+    def apply_strategy(self, strategy: Strategy) -> pd.DataFrame:
+        return strategy.generate_signals(self.df)
