@@ -8,7 +8,7 @@ class Strategy02(Strategy):
     def generate_signals(self, df: pd.DataFrame) -> pd.DataFrame:
         """
 
-        A simple trading strategy based on
+        A simple price action trading strategy based on
         https://www.youtube.com/watch?v=J6VRMhDnVrM.
 
         Parameters:
