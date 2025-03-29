@@ -1,7 +1,7 @@
 import pandas as pd
 
-from utils.signals import HOLD, LONG, SHORT
-from utils.strategy import Strategy
+from models.signals import HOLD, LONG, SHORT
+from models.strategy import Strategy
 
 
 class LarryWilliamsPriceAction(Strategy):

@@ -2,7 +2,7 @@ import pandas as pd
 import pandas_ta as ta
 import yfinance as yf
 
-from utils.strategy import Strategy
+from models.strategy import Strategy
 
 
 class Asset:

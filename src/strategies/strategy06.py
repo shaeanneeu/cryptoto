@@ -1,7 +1,7 @@
 import pandas as pd
 
-from utils.signals import HOLD, LONG, SHORT
-from utils.strategy import Strategy
+from models.signals import HOLD, LONG, SHORT
+from models.strategy import Strategy
 
 
 class VolumeSpikeReversal(Strategy):
@@ -32,7 +32,7 @@ class VolumeSpikeReversal(Strategy):
                 return HOLD
 
             row = df.iloc[pos]
-            prev_closes = df["Close"].iloc[pos - 10:pos]
+            prev_closes = df["Close"].iloc[pos - 10 : pos]
 
             volume_spike = row["Volume"] > 2 * df["AvgVolume10"].iloc[pos]
 

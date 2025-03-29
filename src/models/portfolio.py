@@ -1,6 +1,6 @@
 from typing import List
 
-from utils.asset import Asset
+from models.asset import Asset
 
 
 class Portfolio:
