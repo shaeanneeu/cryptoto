@@ -4,12 +4,13 @@ from utils.signals import HOLD, LONG, SHORT
 from utils.strategy import Strategy
 
 
-class Strategy02(Strategy):
+class LarryWilliamsPriceAction(Strategy):
     def generate_signals(self, df: pd.DataFrame) -> pd.DataFrame:
         """
 
         A price action trading strategy based on
         https://www.youtube.com/watch?v=J6VRMhDnVrM.
+        Larry Williams' trading strategy.
 
         Parameters:
             df (pd.DataFrame): An asset's historical data.
@@ -33,8 +34,6 @@ class Strategy02(Strategy):
 
             return HOLD
 
-        df["TotalSignal"] = df.apply(
-            lambda row: total_signal(df, row.name), axis=1
-        )
+        df["TotalSignal"] = df.apply(lambda row: total_signal(df, row.name), axis=1)
 
         return df

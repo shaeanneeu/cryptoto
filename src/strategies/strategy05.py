@@ -1,11 +1,10 @@
 import pandas as pd
-import numpy as np
 
 from utils.signals import HOLD, LONG, SHORT
 from utils.strategy import Strategy
 
 
-class Strategy05(Strategy):
+class RSIDivergence(Strategy):
     def generate_signals(self, df: pd.DataFrame) -> pd.DataFrame:
         """
         RSI Divergence Strategy:
@@ -32,7 +31,7 @@ class Strategy05(Strategy):
             rsi = 100 - (100 / (1 + rs))
             return rsi
 
-        '''
+        """
         def compute_rsi(series, period=14):
             delta = series.diff()
             gain = np.where(delta > 0, delta, 0)
@@ -44,7 +43,7 @@ class Strategy05(Strategy):
             rs = avg_gain / avg_loss
             rsi = 100 - (100 / (1 + rs))
             return pd.Series(rsi, index=series.index)'
-        '''
+        """
 
         df["RSI"] = compute_rsi(df["Close"])
 
@@ -58,7 +57,7 @@ class Strategy05(Strategy):
             rsi = df["RSI"]
 
             # Get last two local minima
-            recent_lows = close.iloc[pos - 10:pos].nsmallest(2).index
+            recent_lows = close.iloc[pos - 10 : pos].nsmallest(2).index
             if len(recent_lows) < 2:
                 return HOLD
 
@@ -67,7 +66,7 @@ class Strategy05(Strategy):
                 return LONG  # Bullish divergence
 
             # Get last two local maxima
-            recent_highs = close.iloc[pos - 10:pos].nlargest(2).index
+            recent_highs = close.iloc[pos - 10 : pos].nlargest(2).index
             if len(recent_highs) < 2:
                 return HOLD
 

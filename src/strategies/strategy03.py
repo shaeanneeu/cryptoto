@@ -4,7 +4,7 @@ from utils.signals import HOLD, LONG, SHORT
 from utils.strategy import Strategy
 
 
-class Strategy03(Strategy):
+class MichaelHarrisPriceAction(Strategy):
     def generate_signals(self, df: pd.DataFrame) -> pd.DataFrame:
         """
 

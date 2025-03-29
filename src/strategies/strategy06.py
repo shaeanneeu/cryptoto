@@ -4,7 +4,7 @@ from utils.signals import HOLD, LONG, SHORT
 from utils.strategy import Strategy
 
 
-class Strategy06(Strategy):
+class VolumeSpikeReversal(Strategy):
     def generate_signals(self, df: pd.DataFrame) -> pd.DataFrame:
         """
         Volume Spike Reversal Strategy:

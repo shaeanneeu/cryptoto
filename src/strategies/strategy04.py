@@ -4,7 +4,7 @@ from utils.signals import HOLD, LONG, SHORT
 from utils.strategy import Strategy
 
 
-class Strategy04(Strategy):
+class MACDBollingerBandsMeanReversion(Strategy):
     def generate_signals(self, df: pd.DataFrame) -> pd.DataFrame:
         """
 
