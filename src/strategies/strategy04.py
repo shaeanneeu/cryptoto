@@ -26,8 +26,6 @@ class Strategy04(Strategy):
             signals.
         """
 
-        df["MACD"]
-
         def total_signal(df: pd.DataFrame, curr):
 
             pos = df.index.get_loc(curr)
