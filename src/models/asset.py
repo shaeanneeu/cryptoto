@@ -1,3 +1,5 @@
+from typing import Type
+
 import pandas as pd
 import pandas_ta as ta
 import yfinance as yf
@@ -41,5 +43,5 @@ class Asset:
 
         self.df = df
 
-    def apply_strategy(self, strategy: Strategy) -> pd.DataFrame:
-        return strategy.generate_signals(self.df)
+    def apply_strategy(self, strategy: Type[Strategy]) -> pd.DataFrame:
+        return strategy().generate_signals(self.df)
