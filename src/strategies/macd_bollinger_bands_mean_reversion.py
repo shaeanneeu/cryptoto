@@ -1,55 +1,49 @@
-import pandas as pd
+import pandas_ta as ta
+from backtesting import Strategy
 
-from models.signals import HOLD, LONG, SHORT
-from models.strategy import Strategy
+
+def bbands(data):
+    # 200 as per video below
+    return ta.bbands(data.Close.s, 200).to_numpy()
+
+
+def macd(data):
+    return ta.macd(data.Close.s).to_numpy()
 
 
 class MACDBollingerBandsMeanReversion(Strategy):
-    def generate_signals(self, df: pd.DataFrame) -> pd.DataFrame:
-        """
+    """
+    An indicators + mean reversion trading strategy based on
+    https://www.youtube.com/watch?v=qShed6dyrQY.
+    Good for prices in range-bound markets.
+    """
 
-        An indicators + mean reversion trading strategy based on
-        https://www.youtube.com/watch?v=qShed6dyrQY.
-        Good for prices in range-bound markets.
+    def init(self):
 
-        NOTE: The video uses Bollinger bands with a length of 200.
-        Unsure why they choose this length; sticking to the default 20.
+        (
+            self.lower_band,
+            self.middle_band,
+            self.upper_band,
+            self.band_width,
+            self.percent_b,
+        ) = self.I(bbands, self.data)
 
-        NOTE: The video also has a trend-following strategy that we could try.
-        Not implemented yet.
+        self.macd, self.macd_histogram, self.macd_signal = self.I(macd, self.data)
 
-        Parameters:
-            df (pd.DataFrame): An asset's historical data.
+    def next(self):
 
-        Returns:
-            pd.DataFrame: The input DataFrame with an additional column of trading
-            signals.
-        """
+        if (
+            self.data.Close[-2] < self.data.Close[-1]
+            and self.macd_histogram[-2] < self.macd_histogram[-1]
+            and self.data.Close[-2] < self.lower_band[-2]
+            and self.data.Close[-1] > self.lower_band[-1]
+        ):
+            self.buy()
 
-        def total_signal(df: pd.DataFrame, curr):
-
-            pos = df.index.get_loc(curr)
-            prev_macd_hist = df["MACD"][pos - 1] - df["Signal"][pos - 1]
-            curr_macd_hist = df["MACD"][pos] - df["Signal"][pos]
-
-            if (
-                df["Close"][pos - 1] < df["Close"][pos]
-                and prev_macd_hist < curr_macd_hist
-                and df["Close"][pos - 1] < df["Lower_Band"][pos - 1]
-                and df["Close"][pos] > df["Lower_Band"][pos]
-            ):
-                return LONG
-
-            if (
-                df["Close"][pos - 1] > df["Close"][pos]
-                and prev_macd_hist > curr_macd_hist
-                and df["Close"][pos - 1] > df["Upper_Band"][pos - 1]
-                and df["Close"][pos] < df["Upper_Band"][pos]
-            ):
-                return SHORT
-
-            return HOLD
-
-        df["TotalSignal"] = df.apply(lambda row: total_signal(df, row.name), axis=1)
-
-        return df
+        elif (
+            self.data.Close[-2] > self.data.Close[-1]
+            and self.macd_histogram[-2] > self.macd_histogram[-1]
+            and self.data.Close[-2] > self.upper_band[-2]
+            and self.data.Close[-1] < self.upper_band[-1]
+        ):
+            self.sell()
