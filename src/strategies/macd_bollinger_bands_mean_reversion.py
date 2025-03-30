@@ -1,10 +1,10 @@
 import pandas as pd
 
-from utils.signals import HOLD, LONG, SHORT
-from utils.strategy import Strategy
+from models.signals import HOLD, LONG, SHORT
+from models.strategy import Strategy
 
 
-class Strategy04(Strategy):
+class MACDBollingerBandsMeanReversion(Strategy):
     def generate_signals(self, df: pd.DataFrame) -> pd.DataFrame:
         """
 
@@ -25,8 +25,6 @@ class Strategy04(Strategy):
             pd.DataFrame: The input DataFrame with an additional column of trading
             signals.
         """
-
-        df["MACD"]
 
         def total_signal(df: pd.DataFrame, curr):
 
