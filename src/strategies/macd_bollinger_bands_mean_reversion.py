@@ -1,55 +1,60 @@
-import pandas as pd
+from backtesting import Strategy
+import pandas_ta as ta
 
-from models.signals import HOLD, LONG, SHORT
-from models.strategy import Strategy
+class MACDBollingerBandsMeanReversion(Strategy):    
+    '''
+    An indicators + mean reversion trading strategy based on
+    https://www.youtube.com/watch?v=qShed6dyrQY.
+    Good for prices in range-bound markets.
 
+    NOTE: The video uses Bollinger bands with a length of 200.
+    Unsure why they choose this length; sticking to the default 20.
 
-class MACDBollingerBandsMeanReversion(Strategy):
-    def generate_signals(self, df: pd.DataFrame) -> pd.DataFrame:
-        """
+    NOTE: The video also has a trend-following strategy that we could try.
+    Not implemented yet.
+    '''
+        
+    def init(self):
+        self.macd_line, self.macd_hist, self.macd_signal = self.I(
+            ta.macd, self.data.Close.s, fast=12, slow=26, signal=9
+        )
 
-        An indicators + mean reversion trading strategy based on
-        https://www.youtube.com/watch?v=qShed6dyrQY.
-        Good for prices in range-bound markets.
-
-        NOTE: The video uses Bollinger bands with a length of 200.
-        Unsure why they choose this length; sticking to the default 20.
-
-        NOTE: The video also has a trend-following strategy that we could try.
-        Not implemented yet.
-
-        Parameters:
-            df (pd.DataFrame): An asset's historical data.
-
-        Returns:
-            pd.DataFrame: The input DataFrame with an additional column of trading
-            signals.
-        """
-
-        def total_signal(df: pd.DataFrame, curr):
-
-            pos = df.index.get_loc(curr)
-            prev_macd_hist = df["MACD"][pos - 1] - df["Signal"][pos - 1]
-            curr_macd_hist = df["MACD"][pos] - df["Signal"][pos]
-
-            if (
-                df["Close"][pos - 1] < df["Close"][pos]
-                and prev_macd_hist < curr_macd_hist
-                and df["Close"][pos - 1] < df["Lower_Band"][pos - 1]
-                and df["Close"][pos] > df["Lower_Band"][pos]
-            ):
-                return LONG
-
-            if (
-                df["Close"][pos - 1] > df["Close"][pos]
-                and prev_macd_hist > curr_macd_hist
-                and df["Close"][pos - 1] > df["Upper_Band"][pos - 1]
-                and df["Close"][pos] < df["Upper_Band"][pos]
-            ):
-                return SHORT
-
-            return HOLD
-
-        df["TotalSignal"] = df.apply(lambda row: total_signal(df, row.name), axis=1)
-
-        return df
+        def bb_lower(close):
+            return ta.bbands(close, length=20, std=2)["BBL_20_2.0"]
+        
+        def bb_upper(close):
+            return ta.bbands(close, length=20, std=2)["BBU_20_2.0"]
+        
+        self.lower_band = self.I(bb_lower, self.data.Close.s)
+        self.upper_band = self.I(bb_upper, self.data.Close.s)
+    
+    def next(self):
+        if len(self.data.Close) < 2:
+            return
+        
+        current_close = self.data.Close[-1]
+        previous_close = self.data.Close[-2]
+        
+        current_lower = self.lower_band[-1]
+        previous_lower = self.lower_band[-2]
+        current_upper = self.upper_band[-1]
+        previous_upper = self.upper_band[-2]
+        
+        current_macd_hist = self.macd_hist[-1]
+        previous_macd_hist = self.macd_hist[-2]
+        
+        if (
+            previous_close < current_close and
+            previous_macd_hist < current_macd_hist and
+            previous_close < previous_lower and
+            current_close > current_lower
+        ):
+            self.buy()
+        
+        elif (
+            previous_close > current_close and
+            previous_macd_hist > current_macd_hist and
+            previous_close > previous_upper and
+            current_close < current_upper
+        ):
+            self.sell()

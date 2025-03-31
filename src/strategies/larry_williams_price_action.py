@@ -1,39 +1,23 @@
-import pandas as pd
-
-from models.signals import HOLD, LONG, SHORT
-from models.strategy import Strategy
-
+from backtesting import Strategy
 
 class LarryWilliamsPriceAction(Strategy):
-    def generate_signals(self, df: pd.DataFrame) -> pd.DataFrame:
-        """
+    """
+    A price action trading strategy based on
+    https://www.youtube.com/watch?v=J6VRMhDnVrM.
+    Larry Williams' trading strategy.
+    """
 
-        A price action trading strategy based on
-        https://www.youtube.com/watch?v=J6VRMhDnVrM.
-        Larry Williams' trading strategy.
+    def init(self):
+        pass
 
-        Parameters:
-            df (pd.DataFrame): An asset's historical data.
-
-        Returns:
-            pd.DataFrame: The input DataFrame with an additional column of trading
-            signals.
-        """
-
-        def total_signal(df: pd.DataFrame, curr):
-
-            op, high, low, close = df.loc[curr, ["Open", "High", "Low", "Close"]]
-            pos = df.index.get_loc(curr)
-            prev_high, prev_low = df.iloc[pos - 1][["High", "Low"]]
-
-            if op > close and high > prev_high and low < prev_low and close < prev_low:
-                return LONG
-
-            if op < close and low < prev_low and high > prev_high and close > prev_high:
-                return SHORT
-
-            return HOLD
-
-        df["TotalSignal"] = df.apply(lambda row: total_signal(df, row.name), axis=1)
-
-        return df
+    def next(self):
+        if self.data.Open[-1] > self.data.Close \
+            and self.data.High[-1] > self.data.High[-2] \
+            and self.data.Low[-1] < self.data.Low[-2] \
+            and self.data.Close[-1] < self.data.Low[-2]:
+            self.sell()
+        elif self.data.Open[-1] < self.data.Close \
+            and self.data.Low[-1] < self.data.Low[-2] \
+            and self.data.High[-1] > self.data.High[-2] \
+            and self.data.Close[-1] > self.data.High[-2]:
+            self.buy()
