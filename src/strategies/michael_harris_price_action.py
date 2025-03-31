@@ -20,7 +20,7 @@ class MichaelHarrisPriceAction(Strategy):
             self.data.High[-3],
             self.data.High[-4],
         )
-        l, l1, l2, l3 = (
+        l, l1, l2, l3 = (  # noqa: E741
             self.data.Low[-1],
             self.data.Low[-2],
             self.data.Low[-3],

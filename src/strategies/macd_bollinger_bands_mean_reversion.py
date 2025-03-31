@@ -7,10 +7,6 @@ class MACDBollingerBandsMeanReversion(Strategy):
     https://www.youtube.com/watch?v=qShed6dyrQY.
     Good for prices in range-bound markets.
     '''
-    
-    size = 0.1  # Trade size
-    sl_pct = 0.02
-    tp_pct = 0.04
         
     def init(self):
         self.macd_line, self.macd_hist, self.macd_signal = self.I(
@@ -47,9 +43,7 @@ class MACDBollingerBandsMeanReversion(Strategy):
             previous_close < previous_lower and
             current_close > current_lower
         ):
-            sl = current_close - self.sl_pct * current_close
-            tp = current_close + self.tp_pct * current_close
-            self.buy(size=self.size, sl=sl, tp=tp)
+            self.buy()
         
         elif (
             previous_close > current_close and
@@ -57,6 +51,4 @@ class MACDBollingerBandsMeanReversion(Strategy):
             previous_close > previous_upper and
             current_close < current_upper
         ):
-            sl = current_close + self.sl_pct * current_close
-            tp = current_close - self.tp_pct * current_close
-            self.sell(size=self.size, sl=sl, tp=tp)
+            self.sell()
