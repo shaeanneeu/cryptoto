@@ -1,11 +1,11 @@
 from backtesting import Strategy
 
 class LarryWilliamsPriceAction(Strategy):
-    """
+    '''
     A price action trading strategy based on
     https://www.youtube.com/watch?v=J6VRMhDnVrM.
     Larry Williams' trading strategy.
-    """
+    '''
 
     def init(self):
         pass
