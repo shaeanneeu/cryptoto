@@ -13,6 +13,10 @@ class BollingerBandsBreakout(Strategy):
     https://www.fmz.com/strategy/451526 and https://www.youtube.com/watch?v=FdU3q1wspbk.
     """
 
+    size = 0.1  # Trade size
+    sl_pct = 0.02
+    tp_pct = 0.04
+
     def init(self):
 
         (
@@ -25,11 +29,17 @@ class BollingerBandsBreakout(Strategy):
 
     def next(self):
 
+        curr_close = self.data.Close[-1]
+
         if not self.position:
             if self.data.Close[-1] > self.upper_band[-1]:
-                self.buy()
+                sl = curr_close - self.sl_pct * curr_close
+                tp = curr_close + self.tp_pct * curr_close
+                self.buy(size=self.size, sl=sl, tp=tp)
             elif self.data.Close[-1] < self.lower_band[-1]:
-                self.sell()
+                sl = curr_close + self.sl_pct * curr_close
+                tp = curr_close - self.tp_pct * curr_close
+                self.sell(size=self.size, sl=sl, tp=tp)
         else:
             if self.position.is_long:
                 if crossover(self.upper_band[-1], self.data.Close[-1]):
