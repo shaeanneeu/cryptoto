@@ -35,8 +35,8 @@ def iter_crypto() -> typing.Iterator[tuple[str, str]]:
         yield symbol
 
 if __name__ == "__main__":
-    # Set the start date to 15th March 2024, for reproducibility
-    start_date = "15/03/2024"
+    # Set the start date to 1st March 2024, for reproducibility
+    start_date = "03/01/2024"
     start_date_dt = pd.to_datetime(start_date)
     
     failed_to_fetch = []
