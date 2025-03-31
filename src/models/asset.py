@@ -28,14 +28,26 @@ class Asset:
 
         bbands = ta.bbands(df["Close"], length=20)
         bbands = bbands.rename(
-            columns={"BBU_20_2.0": "Upper_Band", "BBL_20_2.0": "Lower_Band"}
+            columns={
+                "BBU_20_2.0": "Upper_Band",
+                "BBM_20_2.0": "Middle_Band",
+                "BBL_20_2.0": "Lower_Band",
+                "BBB_20_2.0": "Band_Width",
+                "BBP_20_2.0": "Percent_B",
+            }
         )
 
         stoch = ta.stoch(df["High"], df["Low"], df["Close"])
         stoch = stoch.rename(columns={"STOCHk_14_3_3": "%K", "STOCHd_14_3_3": "%D"})
 
         macd = ta.macd(df["Close"])
-        macd = macd.rename(columns={"MACD_12_26_9": "MACD", "MACDs_12_26_9": "Signal"})
+        macd = macd.rename(
+            columns={
+                "MACD_12_26_9": "MACD",
+                "MACDh_12_26_9": "Histogram",
+                "MACDs_12_26_9": "Signal",
+            }
+        )
 
         df = df.join([bbands, stoch, macd])
 
