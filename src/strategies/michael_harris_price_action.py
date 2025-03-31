@@ -1,11 +1,4 @@
-import pandas as pd
-
-from models.signals import HOLD, LONG, SHORT
-from models.strategy import Strategy
-
-
-from backtesting import Backtest, Strategy
-import pandas_ta as ta
+from backtesting import Strategy
 
 class MichaelHarrisPriceAction(Strategy):    
     '''

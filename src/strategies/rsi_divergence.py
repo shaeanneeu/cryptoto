@@ -1,4 +1,4 @@
-from backtesting import Backtest, Strategy
+from backtesting import Strategy
 import pandas_ta as ta
 
 class RSIDivergence(Strategy):
