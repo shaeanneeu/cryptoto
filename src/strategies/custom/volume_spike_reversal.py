@@ -19,10 +19,10 @@ class VolumeSpikeReversal(Strategy):
         df["AvgVolume10"] = df["Volume"].rolling(window=10).mean()
 
         def is_downtrend(close_series):
-            return all(close_series["EMA_50"][-7:] < close_series["EMA_200"][-7:])
+            return all(close_series[-7:] < close_series[-7:])
 
         def is_uptrend(close_series):
-            return all(close_series["EMA_50"][-7:] > close_series["EMA_200"][-7:])
+            return all(close_series[-7:] > close_series[-7:])
 
         def total_signal(df: pd.DataFrame, curr):
             pos = df.index.get_loc(curr)
