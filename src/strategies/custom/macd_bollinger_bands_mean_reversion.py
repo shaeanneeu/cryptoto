@@ -21,14 +21,11 @@ class MACDBollingerBandsMeanReversion(Strategy):
             signals.
         """
 
-        bbands = ta.bbands(df["Close"], length=200)
+        bbands = ta.bbands(df["Close"], length=200)[["BBU_200_2.0", "BBL_200_2.0"]]
         bbands = bbands.rename(
             columns={
                 "BBU_200_2.0": "Upper_Band_200",
-                "BBM_200_2.0": "Middle_Band_200",
                 "BBL_200_2.0": "Lower_Band_200",
-                "BBB_200_2.0": "Band_Width_200",
-                "BBP_200_2.0": "Percent_B_200",
             }
         )
 
