@@ -14,34 +14,8 @@ class RSIDivergence(Strategy):
     Returns:
         pd.DataFrame: DataFrame with 'TotalSignal' column.
     """
+
     def generate_signals(self, df: pd.DataFrame) -> pd.DataFrame:
-
-        def compute_rsi(series, period=14):
-            delta = series.diff()
-
-            gain = delta.clip(lower=0)
-            loss = -delta.clip(upper=0)
-
-            avg_gain = gain.rolling(window=period).mean()
-            avg_loss = loss.rolling(window=period).mean()
-
-            rs = avg_gain / avg_loss
-            rsi = 100 - (100 / (1 + rs))
-            return rsi
-
-        """
-        def compute_rsi(series, period=14):
-            delta = series.diff()
-            gain = np.where(delta > 0, delta, 0)
-            loss = np.where(delta < 0, -delta, 0)
-            avg_gain = pd.Series(gain).rolling(window=period).mean()
-            avg_loss = pd.Series(loss).rolling(window=period).mean()
-            rs = avg_gain / avg_loss
-            rsi = 100 - (100 / (1 + rs))
-            return pd.Series(rsi, index=series.index)'
-        """
-
-        df["RSI"] = compute_rsi(df["Close"])
 
         def total_signal(df: pd.DataFrame, curr):
             pos = df.index.get_loc(curr)
