@@ -30,22 +30,22 @@ class MACDBollingerBandsMeanReversion(Strategy):
 
         def total_signal(df: pd.DataFrame, curr):
             pos = df.index.get_loc(curr)
-            prev_macd_hist = df["MACD"][pos - 1] - df["Signal"][pos - 1]
-            curr_macd_hist = df["MACD"][pos] - df["Signal"][pos]
+            prev_macd_hist = df["MACD"].iloc[pos - 1] - df["Signal"].iloc[pos - 1]
+            curr_macd_hist = df["MACD"].iloc[pos] - df["Signal"].iloc[pos]
 
             if (
-                df["Close"][pos - 1] < df["Close"][pos]
+                df["Close"].iloc[pos - 1] < df["Close"].iloc[pos]
                 and prev_macd_hist < curr_macd_hist
-                and df["Close"][pos - 1] < bbands["Lower_Band_200"][pos - 1]
-                and df["Close"][pos] > bbands["Lower_Band_200"][pos]
+                and df["Close"].iloc[pos - 1] < bbands["Lower_Band_200"].iloc[pos - 1]
+                and df["Close"].iloc[pos] > bbands["Lower_Band_200"].iloc[pos]
             ):
                 return LONG
 
             if (
-                df["Close"][pos - 1] > df["Close"][pos]
+                df["Close"].iloc[pos - 1] > df["Close"].iloc[pos]
                 and prev_macd_hist > curr_macd_hist
-                and df["Close"][pos - 1] > bbands["Upper_Band_200"][pos - 1]
-                and df["Close"][pos] < bbands["Upper_Band_200"][pos]
+                and df["Close"].iloc[pos - 1] > bbands["Upper_Band_200"].iloc[pos - 1]
+                and df["Close"].iloc[pos] < bbands["Upper_Band_200"].iloc[pos]
             ):
                 return SHORT
 
