@@ -2,6 +2,7 @@ import pandas as pd
 
 from models.signals import HOLD, LONG, SHORT
 from models.strategy import Strategy
+import pandas_ta as ta
 
 class Scalping(Strategy):
     """
@@ -22,6 +23,9 @@ class Scalping(Strategy):
     """
     def generate_signals(self, df: pd.DataFrame) -> pd.DataFrame:
         df.reset_index(inplace=True)
+
+        df["EMA_50"] = ta.ema(df["Close"], length=50)
+        df["EMA_200"] = ta.ema(df["Close"], length=200)
 
         def ema_signal(df, current_candle, backcandles):
             df_slice = df.reset_index().copy()
