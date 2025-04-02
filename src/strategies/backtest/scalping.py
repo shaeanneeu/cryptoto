@@ -5,7 +5,16 @@ from backtesting import Strategy
 class ScalpingFactory:
     @staticmethod
     def get(ema_length=50, ema200_length=200, boll_length=20, boll_std=2, days_continuous_trend=7):
-        return Scalping(ema_length, ema200_length, boll_length, boll_std, days_continuous_trend)
+        class ScalpingCustom(Scalping):
+            def init(self):
+                super().init(
+                    ema_length=ema_length,
+                    ema200_length=ema200_length,
+                    boll_length=boll_length,
+                    boll_std=boll_std,
+                    days_continuous_trend=days_continuous_trend
+                )
+        return ScalpingCustom
 
 class Scalping(Strategy):
     """

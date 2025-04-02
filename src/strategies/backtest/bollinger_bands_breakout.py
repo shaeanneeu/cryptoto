@@ -5,7 +5,13 @@ from backtesting.lib import crossover
 class BollingerBandsBreakoutFactory:
     @staticmethod
     def get(bb_length=200, bb_std=2):
-        return BollingerBandsBreakout(bb_length, bb_std)
+        class BollingerBandsBreakoutCustom(BollingerBandsBreakout):
+            def init(self):
+                super().init(
+                    bb_length=bb_length,
+                    bb_std=bb_std
+                )
+        return BollingerBandsBreakoutCustom
 
 class BollingerBandsBreakout(Strategy):
     """

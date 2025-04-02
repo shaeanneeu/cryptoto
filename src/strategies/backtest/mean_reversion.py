@@ -3,9 +3,15 @@ from backtesting import Strategy
 
 class MeanReversionFactory:
     @staticmethod
-    def get(ma_length, std_length, threshold):
-        return MeanReversion(ma_length, std_length, threshold)
-
+    def get(ma_length=20, std_length=20, threshold=1.5):
+        class MeanReversionCustom(MeanReversion):
+            def init(self):
+                super().init(
+                    ma_length=ma_length,
+                    std_length=std_length,
+                    threshold=threshold
+                )
+        return MeanReversionCustom
 
 class MeanReversion(Strategy):
     """

@@ -4,8 +4,17 @@ from backtesting import Strategy
 
 class VolumeSpikeReversalFactory:
     @staticmethod
-    def get(ema_length=50, ema2_length=200, num_of_continuous_trend=7, sma_length=10, volume_threshold=2):
-        return VolumeSpikeReversal(ema_length, ema2_length, num_of_continuous_trend, sma_length, volume_threshold)
+    def get(ema_length=50, ema200_length=200, num_of_continuous_trend=7, sma_length=10, volume_threshold=2):
+        class VolumeSpikeReversalCustom(VolumeSpikeReversal):
+            def init(self):
+                super().init(
+                    ema_length=ema_length,
+                    ema200_length=ema200_length,
+                    num_of_continuous_trend=num_of_continuous_trend,
+                    sma_length=sma_length,
+                    volume_threshold=volume_threshold
+                )
+        return VolumeSpikeReversalCustom
 
 class VolumeSpikeReversal(Strategy):
     """

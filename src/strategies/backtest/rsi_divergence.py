@@ -4,7 +4,13 @@ import pandas_ta as ta
 class RSIDivergenceFactory:
     @staticmethod
     def get(rsi_length=14, divergence_length=20):
-        return RSIDivergence(rsi_length, divergence_length)
+        class RSIDivergenceCustom(RSIDivergence):
+            def init(self):
+                super().init(
+                    rsi_length=rsi_length,
+                    divergence_length=divergence_length
+                )
+        return RSIDivergenceCustom
 
 class RSIDivergence(Strategy):
     '''

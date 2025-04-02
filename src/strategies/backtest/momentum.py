@@ -3,8 +3,13 @@ from backtesting import Strategy
 
 class MomentumFactory:
     @staticmethod
-    def get(length):
-        return Momentum(length)
+    def get(length=10):
+        class MomentumCustom(Momentum):
+            def init(self):
+                super().init(
+                    length=length
+                )
+        return MomentumCustom
 
 class Momentum(Strategy):
     '''
