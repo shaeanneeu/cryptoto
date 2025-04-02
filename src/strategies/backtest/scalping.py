@@ -4,8 +4,8 @@ from backtesting import Strategy
 
 class ScalpingFactory:
     @staticmethod
-    def get(ema_length=50, ema200_length=200, boll_length=20, boll_std=2, num_of_continuous_trend=7):
-        return Scalping(ema_length, ema200_length, boll_length, boll_std, num_of_continuous_trend)
+    def get(ema_length=50, ema200_length=200, boll_length=20, boll_std=2, days_continuous_trend=7):
+        return Scalping(ema_length, ema200_length, boll_length, boll_std, days_continuous_trend)
 
 class Scalping(Strategy):
     """
@@ -23,7 +23,7 @@ class Scalping(Strategy):
     Take Profit (TP) = TPSL * SL
     """
 
-    def init(self, ema_length=50, ema200_length=200, boll_length=20, boll_std=2, num_of_continuous_trend=7):
+    def init(self, ema_length=50, ema200_length=200, boll_length=20, boll_std=2, days_continuous_trend=7):
         self.ema50 = self.I(ta.ema, self.data.Close.s, length=ema_length)
         self.ema200 = self.I(ta.ema, self.data.Close.s, length=ema200_length)
 
@@ -36,16 +36,16 @@ class Scalping(Strategy):
         self.lower_band = self.I(bb_lower, self.data.Close.s)
         self.upper_band = self.I(bb_upper, self.data.Close.s)
 
-        self.num_of_continuous_trend = num_of_continuous_trend
+        self.days_continuous_trend = days_continuous_trend
 
     def next(self):
         if (
-            all(self.ema50[-self.num_of_continuous_trend:] > self.ema200[-self.num_of_continuous_trend:])
+            all(self.ema50[-self.days_continuous_trend:] > self.ema200[-self.days_continuous_trend:])
             and self.data.Close[-1] <= self.lower_band[-1]
         ):
             self.buy()
         elif (
-            all(self.ema50[-self.num_of_continuous_trend:] < self.ema200[-self.num_of_continuous_trend:])
+            all(self.ema50[-self.days_continuous_trend:] < self.ema200[-self.days_continuous_trend:])
             and self.data.Close[-1] >= self.upper_band[-1]
         ):
             self.sell()
