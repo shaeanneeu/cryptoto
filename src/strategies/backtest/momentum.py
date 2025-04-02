@@ -1,6 +1,11 @@
 import pandas_ta as ta
 from backtesting import Strategy
 
+class MomentumFactory:
+    @staticmethod
+    def get(length):
+        return Momentum(length)
+
 class Momentum(Strategy):
     '''
             __  ___                           __                
@@ -28,8 +33,8 @@ class Momentum(Strategy):
     .--::::-----===.                                    :----:-----===:          
     ---------------:                                    :--------------                                                       
     '''
-    def init(self):
-        self.mom = self.I(ta.mom, self.data.Close.s, length=10)
+    def init(self, length=10):
+        self.mom = self.I(ta.mom, self.data.Close.s, length=length)
     
     def next(self):
         if self.mom[-1] > 0:

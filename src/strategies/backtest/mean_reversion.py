@@ -1,6 +1,12 @@
 import pandas_ta as ta
 from backtesting import Strategy
 
+class MeanReversionFactory:
+    @staticmethod
+    def get(ma_length, std_length, threshold):
+        return MeanReversion(ma_length, std_length, threshold)
+
+
 class MeanReversion(Strategy):
     """
        ▄▄▄▄███▄▄▄▄      ▄████████    ▄████████ ███▄▄▄▄           
@@ -22,10 +28,10 @@ class MeanReversion(Strategy):
       ███    ███   ██████████  ▀██████▀    ██████████   ███    ███  ▄████████▀  █▀    ▀██████▀   ▀█   █▀  
       ███    ███                                        ███    ███                                                                                                                                                                                                                                                     
     """
-    def init(self):
-        self.ma = self.I(ta.sma, self.data.Close.s, length=20)
-        self.std = self.I(ta.stdev, self.data.Close.s, length=20)
-        self.threshold = 1.5
+    def init(self, ma_length=20, std_length=20, threshold=1.5):
+        self.ma = self.I(ta.sma, self.data.Close.s, length=ma_length)
+        self.std = self.I(ta.stdev, self.data.Close.s, length=std_length)
+        self.threshold = threshold
 
     def next(self):
         price = self.data.Close[-1]

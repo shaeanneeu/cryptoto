@@ -2,6 +2,10 @@ import pandas_ta as ta
 from backtesting import Strategy
 from backtesting.lib import crossover
 
+class BollingerBandsBreakoutFactory:
+    @staticmethod
+    def get(bb_length=200, bb_std=2):
+        return BollingerBandsBreakout(bb_length, bb_std)
 
 class BollingerBandsBreakout(Strategy):
     """
@@ -10,13 +14,15 @@ class BollingerBandsBreakout(Strategy):
     and https://www.youtube.com/watch?v=FdU3q1wspbk.
     """
 
-    def init(self):
+    def init(self, bb_length=200, bb_std=2):
+        self.bb_length = bb_length
+        self.bb_std = bb_std
 
         def bb_lower(close):
-            return ta.bbands(close, length=200, std=2)["BBL_200_2.0"]
+            return ta.bbands(close, length=self.bb_length, std=self.bb_std)["BBL_200_2.0"]
 
         def bb_upper(close):
-            return ta.bbands(close, length=200, std=2)["BBU_200_2.0"]
+            return ta.bbands(close, length=self.bb_length, std=self.bb_std)["BBU_200_2.0"]
 
         self.lower_band = self.I(bb_lower, self.data.Close.s)
         self.upper_band = self.I(bb_upper, self.data.Close.s)

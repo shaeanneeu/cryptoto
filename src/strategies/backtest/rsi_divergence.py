@@ -1,6 +1,11 @@
 from backtesting import Strategy
 import pandas_ta as ta
 
+class RSIDivergenceFactory:
+    @staticmethod
+    def get(rsi_length=14, divergence_length=20):
+        return RSIDivergence(rsi_length, divergence_length)
+
 class RSIDivergence(Strategy):
     '''
     RSI Divergence Strategy:
@@ -8,17 +13,18 @@ class RSIDivergence(Strategy):
     - SHORT: Bearish divergence (price higher high, RSI lower high)
     '''
         
-    def init(self):
-        self.rsi = ta.rsi(self.data.Close.s, length=14)
+    def init(self, rsi_length=14, divergence_length=20):
+        self.rsi = ta.rsi(self.data.Close.s, length=rsi_length)
+        self.divergence_length = divergence_length
     
     def next(self):
-        if len(self.data.Close) < 20:
+        if len(self.data.Close) < self.divergence_length:
             return
         
         close = self.data.Close.s
         rsi = self.rsi
 
-        recent_lows = close.iloc[-20:].nsmallest(2).index
+        recent_lows = close.iloc[-self.divergence_length:].nsmallest(2).index
         if len(recent_lows) < 2:
             return
         
@@ -26,7 +32,7 @@ class RSIDivergence(Strategy):
         if close[low1] > close[low2] and rsi[low1] < rsi[low2]:
             self.sell()
         
-        recent_highs = close.iloc[-20:].nlargest(2).index
+        recent_highs = close.iloc[-self.divergence_length:].nlargest(2).index
         if len(recent_highs) < 2:
             return
         
