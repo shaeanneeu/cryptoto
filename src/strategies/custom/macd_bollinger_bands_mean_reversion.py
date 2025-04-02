@@ -6,20 +6,19 @@ from models.strategy import Strategy
 
 
 class MACDBollingerBandsMeanReversion(Strategy):
+    """
+    An indicators + mean reversion trading strategy based on
+    https://www.youtube.com/watch?v=qShed6dyrQY.
+    Good for prices in range-bound markets.
+
+    Parameters:
+        df (pd.DataFrame): An asset's historical data.
+
+    Returns:
+        pd.DataFrame: The input DataFrame with an additional column of trading
+        signals.
+    """
     def generate_signals(self, df: pd.DataFrame) -> pd.DataFrame:
-        """
-
-        An indicators + mean reversion trading strategy based on
-        https://www.youtube.com/watch?v=qShed6dyrQY.
-        Good for prices in range-bound markets.
-
-        Parameters:
-            df (pd.DataFrame): An asset's historical data.
-
-        Returns:
-            pd.DataFrame: The input DataFrame with an additional column of trading
-            signals.
-        """
 
         bbands = ta.bbands(df["Close"], length=200)[["BBU_200_2.0", "BBL_200_2.0"]]
         bbands = bbands.rename(

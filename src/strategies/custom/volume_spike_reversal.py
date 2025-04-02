@@ -5,16 +5,16 @@ from models.strategy import Strategy
 
 
 class VolumeSpikeReversal(Strategy):
+    """
+    Volume Spike Reversal Strategy:
+    - LONG: Volume spike + bullish candle + recent downtrend
+    - SHORT: Volume spike + bearish candle + recent uptrend
+    Parameters:
+        df (pd.DataFrame): Asset's historical OHLCV data.
+    Returns:
+        pd.DataFrame: DataFrame with 'TotalSignal' column.
+    """
     def generate_signals(self, df: pd.DataFrame) -> pd.DataFrame:
-        """
-        Volume Spike Reversal Strategy:
-        - LONG: Volume spike + bullish candle + recent downtrend
-        - SHORT: Volume spike + bearish candle + recent uptrend
-        Parameters:
-            df (pd.DataFrame): Asset's historical OHLCV data.
-        Returns:
-            pd.DataFrame: DataFrame with 'TotalSignal' column.
-        """
 
         df["AvgVolume10"] = df["Volume"].rolling(window=10).mean()
 

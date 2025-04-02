@@ -6,12 +6,20 @@ from models.strategy import Strategy
 
 
 class BollingerBandsBreakout(Strategy):
+    """
+    An indicators + trend-following trading strategy based on
+    https://www.tradingview.com/chart/SP500/fOniByDO-Bollinger-Bands-Basics-and-Breakout-Strategy/
+    and https://www.youtube.com/watch?v=FdU3q1wspbk.
+
+    Parameters:
+        df (pd.DataFrame): An asset's historical data.
+
+    Returns:
+        pd.DataFrame: The input DataFrame with an additional column of trading
+        signals.
+    """
+
     def generate_signals(self, df: pd.DataFrame) -> pd.DataFrame:
-        """
-        An indicators + trend-following trading strategy based on
-        https://www.tradingview.com/chart/SP500/fOniByDO-Bollinger-Bands-Basics-and-Breakout-Strategy/
-        and https://www.youtube.com/watch?v=FdU3q1wspbk.
-        """
 
         bbands = ta.bbands(df["Close"], length=200)[["BBU_200_2.0", "BBL_200_2.0"]]
         bbands = bbands.rename(

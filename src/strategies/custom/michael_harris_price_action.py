@@ -5,17 +5,17 @@ from models.strategy import Strategy
 
 
 class MichaelHarrisPriceAction(Strategy):
+    """
+    A price action trading strategy based on
+    https://www.youtube.com/watch?v=H23GLHD__yY.
+    Michael Harris' trading strategy.
+    Parameters:
+        df (pd.DataFrame): An asset's historical data.
+    Returns:
+        pd.DataFrame: The input DataFrame with an additional column of trading
+        signals.
+    """
     def generate_signals(self, df: pd.DataFrame) -> pd.DataFrame:
-        """
-        A price action trading strategy based on
-        https://www.youtube.com/watch?v=H23GLHD__yY.
-        Michael Harris' trading strategy.
-        Parameters:
-            df (pd.DataFrame): An asset's historical data.
-        Returns:
-            pd.DataFrame: The input DataFrame with an additional column of trading
-            signals.
-        """
 
         def total_signal(df: pd.DataFrame, curr):
 

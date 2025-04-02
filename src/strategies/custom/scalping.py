@@ -4,23 +4,23 @@ from models.signals import HOLD, LONG, SHORT
 from models.strategy import Strategy
 
 class Scalping(Strategy):
+    """
+    Trading Strategy 1: Simple scalping based on this video https://www.youtube.com/watch?v=C3bh6Y4LpGs
+    Trend detection
+    - Uptrend (EMA50>EMA200) - long positions
+    - Downtrend - short positions
+    Bollinger band edges for entry signals
+    - During a uptrend, if price crosses lower bollinger curve, open a long position
+    - During a downtrend, if price crosses upper bollinger band, open a short position
+    Stop-Loss (SL) = slcoef * ATR
+    Take Profit (TP) = TPSL * SL
+    Parameters:
+        df (pd.DataFrame): An asset's historical data.
+    Returns:
+        pd.DataFrame: The input DataFrame with an additional column of trading
+        signals.
+    """
     def generate_signals(self, df: pd.DataFrame) -> pd.DataFrame:
-        """
-        Trading Strategy 1: Simple scalping based on this video https://www.youtube.com/watch?v=C3bh6Y4LpGs
-        Trend detection
-        - Uptrend (EMA50>EMA200) - long positions
-        - Downtrend - short positions
-        Bollinger band edges for entry signals
-        - During a uptrend, if price crosses lower bollinger curve, open a long position
-        - During a downtrend, if price crosses upper bollinger band, open a short position
-        Stop-Loss (SL) = slcoef * ATR
-        Take Profit (TP) = TPSL * SL
-        Parameters:
-            df (pd.DataFrame): An asset's historical data.
-        Returns:
-            pd.DataFrame: The input DataFrame with an additional column of trading
-            signals.
-        """
         df.reset_index(inplace=True)
 
         def ema_signal(df, current_candle, backcandles):

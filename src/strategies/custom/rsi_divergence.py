@@ -5,16 +5,16 @@ from models.strategy import Strategy
 
 
 class RSIDivergence(Strategy):
+    """
+    RSI Divergence Strategy:
+    - LONG: Bullish divergence (price lower low, RSI higher low)
+    - SHORT: Bearish divergence (price higher high, RSI lower high)
+    Parameters:
+        df (pd.DataFrame): Asset's historical data.
+    Returns:
+        pd.DataFrame: DataFrame with 'TotalSignal' column.
+    """
     def generate_signals(self, df: pd.DataFrame) -> pd.DataFrame:
-        """
-        RSI Divergence Strategy:
-        - LONG: Bullish divergence (price lower low, RSI higher low)
-        - SHORT: Bearish divergence (price higher high, RSI lower high)
-        Parameters:
-            df (pd.DataFrame): Asset's historical data.
-        Returns:
-            pd.DataFrame: DataFrame with 'TotalSignal' column.
-        """
 
         def compute_rsi(series, period=14):
             delta = series.diff()
