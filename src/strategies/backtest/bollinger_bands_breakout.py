@@ -9,6 +9,9 @@ class BollingerBandsBreakout(Strategy):
     and https://www.youtube.com/watch?v=FdU3q1wspbk.
     """
 
+    tp_pct = 0.1
+    sl_pct = 0.05
+
     def init(self):
         pass
 
@@ -23,11 +26,19 @@ class BollingerBandsBreakout(Strategy):
 
     def next(self):
 
+        curr_close = self.data.Close[-1]
+
         if not self.position:
             if self.data.Close[-1] > self.data.Upper_Band_200[-1]:
-                self.buy()
+                # self.buy()
+                sl = curr_close - self.sl_pct * curr_close
+                tp = curr_close + self.tp_pct * curr_close
+                self.buy(sl=sl, tp=tp)
             elif self.data.Close[-1] < self.data.Lower_Band_200[-1]:
-                self.sell()
+                # self.sell()
+                sl = curr_close + self.sl_pct * curr_close
+                tp = curr_close - self.tp_pct * curr_close
+                self.sell(sl=sl, tp=tp)
         else:
             if self.position.is_long:
                 if crossover(self.data.Upper_Band_200[-1], self.data.Close[-1]):

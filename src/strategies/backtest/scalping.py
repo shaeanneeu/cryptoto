@@ -17,6 +17,9 @@ class Scalping(Strategy):
     Take Profit (TP) = TPSL * SL
     """
 
+    tp_pct = 0.1
+    sl_pct = 0.05
+
     def init(self):
         pass
         # self.ema50 = self.I(ta.ema, self.data.Close.s, length=50)
@@ -32,13 +35,20 @@ class Scalping(Strategy):
         # self.upper_band = self.I(bb_upper, self.data.Close.s)
 
     def next(self):
+        curr_close = self.data.Close[-1]
         if (
             all(self.data.EMA_50[-7:] > self.data.EMA_200[-7:])
             and self.data.Close[-1] <= self.data.Lower_Band[-1]
         ):
-            self.buy()
+            # self.buy()
+            sl = curr_close - self.sl_pct * curr_close
+            tp = curr_close + self.tp_pct * curr_close
+            self.buy(sl=sl, tp=tp)
         elif (
             all(self.data.EMA_50[-7:] < self.data.EMA_200[-7:])
             and self.data.Close[-1] >= self.data.Upper_Band[-1]
         ):
-            self.sell()
+            # self.sell()
+            sl = curr_close + self.sl_pct * curr_close
+            tp = curr_close - self.tp_pct * curr_close
+            self.sell(sl=sl, tp=tp)
