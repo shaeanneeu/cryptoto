@@ -41,7 +41,4 @@ class RSIDivergence(Strategy):
 
         high1, high2 = recent_highs.sort_values()
         if close[high1] < close[high2] and rsi[high1] > rsi[high2]:
-            # self.sell()
-            sl = curr_close + self.sl_pct * curr_close
-            tp = curr_close - self.tp_pct * curr_close
-            self.sell(sl=sl, tp=tp)
+            self.position.close()

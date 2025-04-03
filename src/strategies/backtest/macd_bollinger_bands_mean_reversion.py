@@ -58,7 +58,4 @@ class MACDBollingerBandsMeanReversion(Strategy):
             and prev_close > prev_upper
             and curr_close < curr_upper
         ):
-            # self.sell()
-            sl = curr_close + self.sl_pct * curr_close
-            tp = curr_close - self.tp_pct * curr_close
-            self.sell(sl=sl, tp=tp)
+            self.position.close()

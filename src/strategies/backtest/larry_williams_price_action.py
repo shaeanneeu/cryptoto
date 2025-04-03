@@ -35,7 +35,4 @@ class LarryWilliamsPriceAction(Strategy):
             and self.data.High[-1] > self.data.High[-2]
             and self.data.Close[-1] > self.data.High[-2]
         ):
-            # self.sell()
-            sl = curr_close + self.sl_pct * curr_close
-            tp = curr_close - self.tp_pct * curr_close
-            self.sell(sl=sl, tp=tp)
+            self.position.close()

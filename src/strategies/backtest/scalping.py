@@ -48,7 +48,4 @@ class Scalping(Strategy):
             all(self.data.EMA_50[-7:] < self.data.EMA_200[-7:])
             and self.data.Close[-1] >= self.data.Upper_Band[-1]
         ):
-            # self.sell()
-            sl = curr_close + self.sl_pct * curr_close
-            tp = curr_close - self.tp_pct * curr_close
-            self.sell(sl=sl, tp=tp)
+            self.position.close()

@@ -35,10 +35,7 @@ class BollingerBandsBreakout(Strategy):
                 tp = curr_close + self.tp_pct * curr_close
                 self.buy(sl=sl, tp=tp)
             elif self.data.Close[-1] < self.data.Lower_Band_200[-1]:
-                # self.sell()
-                sl = curr_close + self.sl_pct * curr_close
-                tp = curr_close - self.tp_pct * curr_close
-                self.sell(sl=sl, tp=tp)
+                self.position.close()
         else:
             if self.position.is_long:
                 if crossover(self.data.Upper_Band_200[-1], self.data.Close[-1]):

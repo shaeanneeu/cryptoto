@@ -40,10 +40,7 @@ class MeanReversion(Strategy):
 
         if not self.position:
             if price < ma - self.threshold * std:
-                # self.sell()
-                sl = curr_close + self.sl_pct * curr_close
-                tp = curr_close - self.tp_pct * curr_close
-                self.sell(sl=sl, tp=tp)
+                self.position.close()
             elif price > ma + self.threshold * std:
                 # self.buy()
                 sl = curr_close - self.sl_pct * curr_close
