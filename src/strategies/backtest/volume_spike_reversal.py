@@ -1,4 +1,3 @@
-import pandas_ta as ta
 from backtesting import Strategy
 
 
@@ -10,8 +9,9 @@ class VolumeSpikeReversal(Strategy):
     """
 
     def init(self):
-        self.ema50 = self.I(ta.ema, self.data.Close.s, length=50)
-        self.ema200 = self.I(ta.ema, self.data.Close.s, length=200)
+        pass
+        # self.ema50 = self.I(ta.ema, self.data.Close.s, length=50)
+        # self.ema200 = self.I(ta.ema, self.data.Close.s, length=200)
 
     def next(self):
         if len(self.data.Close) < 10:
@@ -23,11 +23,11 @@ class VolumeSpikeReversal(Strategy):
             return
 
         if self.data.Close[-1] > self.data.Open[-1] and all(
-            self.ema50[-7:] < self.ema200[-7:]
+            self.data.EMA_50[-7:] < self.data.EMA_200[-7:]
         ):
             self.buy()
 
         elif self.data.Close[-1] < self.data.Open[-1] and all(
-            self.ema50[-7:] > self.ema200[-7:]
+            self.data.EMA_50[-7:] > self.data.EMA_200[-7:]
         ):
             self.sell()

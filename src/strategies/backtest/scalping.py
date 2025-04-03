@@ -1,4 +1,3 @@
-import pandas_ta as ta
 from backtesting import Strategy
 
 
@@ -19,26 +18,27 @@ class Scalping(Strategy):
     """
 
     def init(self):
-        self.ema50 = self.I(ta.ema, self.data.Close.s, length=50)
-        self.ema200 = self.I(ta.ema, self.data.Close.s, length=200)
+        pass
+        # self.ema50 = self.I(ta.ema, self.data.Close.s, length=50)
+        # self.ema200 = self.I(ta.ema, self.data.Close.s, length=200)
 
-        def bb_lower(close):
-            return ta.bbands(close, length=20, std=2)["BBL_20_2.0"]
+        # def bb_lower(close):
+        #     return ta.bbands(close, length=20, std=2)["BBL_20_2.0"]
 
-        def bb_upper(close):
-            return ta.bbands(close, length=20, std=2)["BBU_20_2.0"]
+        # def bb_upper(close):
+        #     return ta.bbands(close, length=20, std=2)["BBU_20_2.0"]
 
-        self.lower_band = self.I(bb_lower, self.data.Close.s)
-        self.upper_band = self.I(bb_upper, self.data.Close.s)
+        # self.lower_band = self.I(bb_lower, self.data.Close.s)
+        # self.upper_band = self.I(bb_upper, self.data.Close.s)
 
     def next(self):
         if (
-            all(self.ema50[-7:] > self.ema200[-7:])
-            and self.data.Close[-1] <= self.lower_band[-1]
+            all(self.data.EMA_50[-7:] > self.data.EMA_200[-7:])
+            and self.data.Close[-1] <= self.data.Lower_Band[-1]
         ):
             self.buy()
         elif (
-            all(self.ema50[-7:] < self.ema200[-7:])
-            and self.data.Close[-1] >= self.upper_band[-1]
+            all(self.data.EMA_50[-7:] < self.data.EMA_200[-7:])
+            and self.data.Close[-1] >= self.data.Upper_Band[-1]
         ):
             self.sell()

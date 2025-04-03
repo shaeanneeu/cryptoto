@@ -1,4 +1,3 @@
-import pandas_ta as ta
 from backtesting import Strategy
 from backtesting.lib import crossover
 
@@ -11,27 +10,28 @@ class BollingerBandsBreakout(Strategy):
     """
 
     def init(self):
+        pass
 
-        def bb_lower(close):
-            return ta.bbands(close, length=200, std=2)["BBL_200_2.0"]
+        # def bb_lower(close):
+        #     return ta.bbands(close, length=200, std=2)["BBL_200_2.0"]
 
-        def bb_upper(close):
-            return ta.bbands(close, length=200, std=2)["BBU_200_2.0"]
+        # def bb_upper(close):
+        #     return ta.bbands(close, length=200, std=2)["BBU_200_2.0"]
 
-        self.lower_band = self.I(bb_lower, self.data.Close.s)
-        self.upper_band = self.I(bb_upper, self.data.Close.s)
+        # self.lower_band = self.I(bb_lower, self.data.Close.s)
+        # self.upper_band = self.I(bb_upper, self.data.Close.s)
 
     def next(self):
 
         if not self.position:
-            if self.data.Close[-1] > self.upper_band[-1]:
+            if self.data.Close[-1] > self.data.Upper_Band_200[-1]:
                 self.buy()
-            elif self.data.Close[-1] < self.lower_band[-1]:
+            elif self.data.Close[-1] < self.data.Lower_Band_200[-1]:
                 self.sell()
         else:
             if self.position.is_long:
-                if crossover(self.upper_band[-1], self.data.Close[-1]):
+                if crossover(self.data.Upper_Band_200[-1], self.data.Close[-1]):
                     self.position.close()
             elif self.position.is_short:
-                if crossover(self.data.Close[-1], self.lower_band[-1]):
+                if crossover(self.data.Close[-1], self.data.Lower_Band_200[-1]):
                     self.position.close()

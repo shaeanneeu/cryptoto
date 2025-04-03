@@ -13,14 +13,14 @@ class MACDBollingerBandsMeanReversion(Strategy):
             ta.macd, self.data.Close.s, fast=12, slow=26, signal=9
         )
 
-        def bb_lower(close):
-            return ta.bbands(close, length=200, std=2)["BBL_200_2.0"]
+        # def bb_lower(close):
+        #     return ta.bbands(close, length=200, std=2)["BBL_200_2.0"]
         
-        def bb_upper(close):
-            return ta.bbands(close, length=200, std=2)["BBU_200_2.0"]
+        # def bb_upper(close):
+        #     return ta.bbands(close, length=200, std=2)["BBU_200_2.0"]
         
-        self.lower_band = self.I(bb_lower, self.data.Close.s)
-        self.upper_band = self.I(bb_upper, self.data.Close.s)
+        # self.lower_band = self.I(bb_lower, self.data.Close.s)
+        # self.upper_band = self.I(bb_upper, self.data.Close.s)
     
     def next(self):
         if len(self.data.Close) < 2:
@@ -29,10 +29,10 @@ class MACDBollingerBandsMeanReversion(Strategy):
         current_close = self.data.Close[-1]
         previous_close = self.data.Close[-2]
         
-        current_lower = self.lower_band[-1]
-        previous_lower = self.lower_band[-2]
-        current_upper = self.upper_band[-1]
-        previous_upper = self.upper_band[-2]
+        current_lower = self.data.Lower_Band_200[-1]
+        previous_lower = self.data.Lower_Band_200[-2]
+        current_upper = self.data.Upper_Band_200[-1]
+        previous_upper = self.data.Upper_Band_200[-2]
         
         current_macd_hist = self.macd_hist[-1]
         previous_macd_hist = self.macd_hist[-2]
