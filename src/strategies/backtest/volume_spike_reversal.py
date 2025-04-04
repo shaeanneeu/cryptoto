@@ -20,7 +20,7 @@ class VolumeSpikeReversal(Strategy):
         if len(self.data.Close) < 10:
             return
 
-        sma10_volume = self.data.Volume[-10:].mean()
+        sma10_volume = self.data.SMA_Volume_10[-1]
 
         if self.data.Volume[-1] <= 2 * sma10_volume:
             return
