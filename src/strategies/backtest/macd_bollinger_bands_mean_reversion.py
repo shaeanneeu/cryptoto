@@ -17,15 +17,6 @@ class MACDBollingerBandsMeanReversion(Strategy):
             ta.macd, self.data.Close.s, fast=12, slow=26, signal=9
         )
 
-        # def bb_lower(close):
-        #     return ta.bbands(close, length=200, std=2)["BBL_200_2.0"]
-
-        # def bb_upper(close):
-        #     return ta.bbands(close, length=200, std=2)["BBU_200_2.0"]
-
-        # self.lower_band = self.I(bb_lower, self.data.Close.s)
-        # self.upper_band = self.I(bb_upper, self.data.Close.s)
-
     def next(self):
         if len(self.data.Close) < 2:
             return

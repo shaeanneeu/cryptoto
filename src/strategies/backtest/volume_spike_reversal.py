@@ -13,8 +13,6 @@ class VolumeSpikeReversal(Strategy):
 
     def init(self):
         pass
-        # self.ema50 = self.I(ta.ema, self.data.Close.s, length=50)
-        # self.ema200 = self.I(ta.ema, self.data.Close.s, length=200)
 
     def next(self):
         if len(self.data.Close) < 10:
