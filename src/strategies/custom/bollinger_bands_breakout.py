@@ -25,7 +25,7 @@ class BollingerBandsBreakout(Strategy):
 
             if df["Close"].iloc[pos] > df["Upper_Band_200"].iloc[pos]:
                 return LONG
-            elif df["Close"].iloc[pos] < df["Lower_Band_200"].iloc[pos]:
+            elif df["Close"].iloc[pos] < df["Upper_Band_200"].iloc[pos]:
                 return SHORT
 
             # elif df["Close"].iloc[pos] < bbands["Lower_Band_200"].iloc[pos]:

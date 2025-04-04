@@ -24,6 +24,9 @@ class BollingerBandsBreakout(Strategy):
             tp = curr_close + self.tp_pct * curr_close
             self.buy(sl=sl, tp=tp)
         elif (
-            self.position.is_long and self.data.Upper_Band_200[-1] > self.data.Close[-1]
+            # Reverse of entry conditions as exit conditions
+            # Position, if any, should always be long, but check anyway
+            self.position.is_long
+            and self.data.Close[-1] < self.data.Upper_Band_200[-1]
         ):
             self.position.close()

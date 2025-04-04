@@ -13,12 +13,12 @@ class MeanReversion(Strategy):
 
             pos = df.index.get_loc(curr)
 
+            # if (
+            #     df["Close"].iloc[pos]
+            #     < df["SMA_20"].iloc[pos] - threshold * df["STD_20"].iloc[pos]
+            # ):
+            #     return SHORT
             if (
-                df["Close"].iloc[pos]
-                < df["SMA_20"].iloc[pos] - threshold * df["STD_20"].iloc[pos]
-            ):
-                return SHORT
-            elif (
                 df["Close"].iloc[pos]
                 > df["SMA_20"].iloc[pos] + threshold * df["STD_20"].iloc[pos]
             ):
