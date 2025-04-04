@@ -10,7 +10,7 @@ authors = [
     {name = "Valerie"}
 ]
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
     "ipykernel",
     "ipython",
@@ -37,6 +37,9 @@ dependencies = [
     "pyportfolioopt (>=1.5.6,<2.0.0)",
     "statsmodels (>=0.14.4,<0.15.0)",
     "backtesting (>=0.6.3,<0.7.0)",
+    "ta (>=0.11.0,<0.12.0)",
+    "xgboost (>=3.0.0,<4.0.0)",
+    "optuna (>=4.2.1,<5.0.0)",
 ]
 
 [tool.poetry]
