@@ -29,7 +29,7 @@ class LarryWilliamsPriceAction(Strategy):
             tp = curr_close + self.tp_pct * curr_close
             self.buy(sl=sl, tp=tp)
 
-        elif ( # Reverse of entry conditions as exit conditions
+        elif (  # Reverse of entry conditions as exit conditions
             # Position, if any, should always be long, but check anyway
             self.position.is_long
             and self.data.Open[-1] < self.data.Close[-1]
