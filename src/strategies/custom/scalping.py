@@ -1,4 +1,5 @@
 import pandas as pd
+import pandas_ta as ta
 
 from models.signals import HOLD, LONG, SHORT
 from models.strategy import Strategy
@@ -13,8 +14,7 @@ class Scalping(Strategy):
     Bollinger band edges for entry signals
     - During a uptrend, if price crosses lower bollinger curve, open a long position
     - During a downtrend, if price crosses upper bollinger band, open a short position
-    Stop-Loss (SL) = slcoef * ATR
-    Take Profit (TP) = TPSL * SL
+
     Parameters:
         df (pd.DataFrame): An asset's historical data.
     Returns:
@@ -46,17 +46,21 @@ class Scalping(Strategy):
             if (
                 ema_signal(df, current_candle, backcandles) == 2
                 and df.Close[current_candle] <= df["Lower_Band"][current_candle]
-                # and df.RSI[current_candle]<60
             ):
                 return LONG
 
-            if (
+            elif (
                 ema_signal(df, current_candle, backcandles) == 1
-                and df.Close[current_candle] >= df["Upper_Band"][current_candle]
-                # and df.RSI[current_candle]>40
+                and df.Close[current_candle] >= df["Lower_Band"][current_candle]
             ):
-
                 return SHORT
+
+            # if (
+            #     ema_signal(df, current_candle, backcandles) == 1
+            #     and df.Close[current_candle] >= df["Upper_Band"][current_candle]
+            # ):
+
+            #     return SHORT
             return HOLD
 
         df["TotalSignal"] = df.apply(lambda row: total_signal(df, row.name, 7), axis=1)

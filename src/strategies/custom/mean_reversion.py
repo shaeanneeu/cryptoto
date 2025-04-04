@@ -23,6 +23,13 @@ class MeanReversion(Strategy):
                 > df["SMA_20"].iloc[pos] + threshold * df["STD_20"].iloc[pos]
             ):
                 return LONG
+            elif (
+                df["Close"].iloc[pos] >= df["SMA_20"].iloc[pos]
+                or df["Close"].iloc[pos]
+                < df["SMA_20"].iloc[pos] - threshold * df["STD_20"].iloc[pos]
+            ):
+                # i.e. sell if we have a long position, since we cannot actually short
+                return SHORT
 
             return HOLD
 

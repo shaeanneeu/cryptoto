@@ -17,6 +17,7 @@ class LarryWilliamsPriceAction(Strategy):
         pd.DataFrame: The input DataFrame with an additional column of trading
         signals.
     """
+
     def generate_signals(self, df: pd.DataFrame) -> pd.DataFrame:
 
         def total_signal(df: pd.DataFrame, curr):
@@ -28,8 +29,12 @@ class LarryWilliamsPriceAction(Strategy):
             if op > close and high > prev_high and low < prev_low and close < prev_low:
                 return LONG
 
-            if op < close and low < prev_low and high > prev_high and close > prev_high:
+            if op < close and high < prev_high and low > prev_low and close > prev_low:
+                # i.e. sell if we have a long position, since we cannot actually short
                 return SHORT
+
+            # if op < close and low < prev_low and high > prev_high and close > prev_high:
+            #     return SHORT
 
             return HOLD
 

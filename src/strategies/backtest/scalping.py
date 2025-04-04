@@ -39,6 +39,6 @@ class Scalping(Strategy):
         elif (
             self.position.is_long
             and all(self.data.EMA_50[-7:] < self.data.EMA_200[-7:])
-            and self.data.Close[-1] >= self.data.Upper_Band[-1]
+            and self.data.Close[-1] >= self.data.Lower_Band[-1]
         ):
             self.position.close()

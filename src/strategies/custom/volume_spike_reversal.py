@@ -14,6 +14,7 @@ class VolumeSpikeReversal(Strategy):
     Returns:
         pd.DataFrame: DataFrame with 'TotalSignal' column.
     """
+
     def generate_signals(self, df: pd.DataFrame) -> pd.DataFrame:
 
         df["AvgVolume10"] = df["Volume"].rolling(window=10).mean()
@@ -37,8 +38,10 @@ class VolumeSpikeReversal(Strategy):
             if volume_spike:
                 if row["Close"] > row["Open"] and is_downtrend(prev_closes):
                     return LONG
-                if row["Close"] < row["Open"] and is_uptrend(prev_closes):
+                elif row["Close"] < row["Open"] and is_uptrend(prev_closes):
                     return SHORT
+                # if row["Close"] < row["Open"] and is_uptrend(prev_closes):
+                #     return SHORT
 
             return HOLD
 

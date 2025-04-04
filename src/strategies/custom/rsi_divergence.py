@@ -35,14 +35,18 @@ class RSIDivergence(Strategy):
             if close[low1] > close[low2] and rsi[low1] < rsi[low2]:
                 return LONG  # Bullish divergence
 
-            # Get last two local maxima
-            recent_highs = close.iloc[pos - 10 : pos].nlargest(2).index
-            if len(recent_highs) < 2:
-                return HOLD
+            elif close[low1] < close[low2] and rsi[low1] > rsi[low2]:
+                # i.e. sell if we have a long position, since we cannot actually short
+                return SHORT
 
-            high1, high2 = recent_highs.sort_values()
-            if close[high1] < close[high2] and rsi[high1] > rsi[high2]:
-                return SHORT  # Bearish divergence
+            # # Get last two local maxima
+            # recent_highs = close.iloc[pos - 10 : pos].nlargest(2).index
+            # if len(recent_highs) < 2:
+            #     return HOLD
+
+            # high1, high2 = recent_highs.sort_values()
+            # if close[high1] < close[high2] and rsi[high1] > rsi[high2]:
+            #     return SHORT  # Bearish divergence
 
             return HOLD
 

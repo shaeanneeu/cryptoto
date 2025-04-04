@@ -27,6 +27,9 @@ class BollingerBandsBreakout(Strategy):
                 return LONG
             elif df["Close"].iloc[pos] < df["Lower_Band_200"].iloc[pos]:
                 return SHORT
+
+            # elif df["Close"].iloc[pos] < bbands["Lower_Band_200"].iloc[pos]:
+            #     return SHORT
             return HOLD
 
         df["TotalSignal"] = df.apply(lambda row: total_signal(df, row.name), axis=1)

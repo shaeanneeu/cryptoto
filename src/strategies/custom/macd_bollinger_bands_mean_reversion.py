@@ -39,7 +39,16 @@ class MACDBollingerBandsMeanReversion(Strategy):
                 and df["Close"].iloc[pos - 1] > df["Upper_Band_200"].iloc[pos - 1]
                 and df["Close"].iloc[pos] < df["Upper_Band_200"].iloc[pos]
             ):
+                # i.e. sell if we have a long position, since we cannot actually short
                 return SHORT
+
+            # if (
+            #     df["Close"].iloc[pos - 1] > df["Close"].iloc[pos]
+            #     and prev_macd_hist > curr_macd_hist
+            #     and df["Close"].iloc[pos - 1] > bbands["Upper_Band_200"].iloc[pos - 1]
+            #     and df["Close"].iloc[pos] < bbands["Upper_Band_200"].iloc[pos]
+            # ):
+            #     return SHORT
 
             return HOLD
 

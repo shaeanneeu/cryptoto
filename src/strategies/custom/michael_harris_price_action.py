@@ -15,6 +15,7 @@ class MichaelHarrisPriceAction(Strategy):
         pd.DataFrame: The input DataFrame with an additional column of trading
         signals.
     """
+
     def generate_signals(self, df: pd.DataFrame) -> pd.DataFrame:
 
         def total_signal(df: pd.DataFrame, curr):
@@ -46,16 +47,28 @@ class MichaelHarrisPriceAction(Strategy):
             ):
                 return LONG
 
-            if (
-                l < l1
-                and l1 < h
-                and h < l2
-                and l2 < h1
-                and h1 < l3
-                and l3 < h2
-                and h2 < h3
+            elif (
+                h < h1
+                and h1 < l
+                and l < h2
+                and h2 < l1
+                and l1 < h3
+                and h3 < l2
+                and l2 < l3
             ):
+                # i.e. sell if we have a long position, since we cannot actually short
                 return SHORT
+
+            # if (
+            #     l < l1
+            #     and l1 < h
+            #     and h < l2
+            #     and l2 < h1
+            #     and h1 < l3
+            #     and l3 < h2
+            #     and h2 < h3
+            # ):
+            #     return SHORT
 
             return HOLD
 
