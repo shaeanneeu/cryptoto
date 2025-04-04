@@ -26,8 +26,8 @@ class MACDBollingerBandsMeanReversion(Strategy):
 
         curr_lower = self.data.Lower_Band_200[-1]
         prev_lower = self.data.Lower_Band_200[-2]
-        curr_upper = self.data.Upper_Band_200[-1]
-        prev_upper = self.data.Upper_Band_200[-2]
+        # curr_upper = self.data.Upper_Band_200[-1]
+        # prev_upper = self.data.Upper_Band_200[-2]
 
         curr_macd_hist = self.macd_hist[-1]
         prev_macd_hist = self.macd_hist[-2]
@@ -43,10 +43,20 @@ class MACDBollingerBandsMeanReversion(Strategy):
             tp = curr_close + self.tp_pct * curr_close
             self.buy(sl=sl, tp=tp)
 
-        elif (
-            prev_close > curr_close
+        elif (  # Reverse of entry conditions as exit conditions
+            # Position, if any, should always be long, but check anyway
+            self.position.is_long
+            and prev_close > curr_close
             and prev_macd_hist > curr_macd_hist
-            and prev_close > prev_upper
-            and curr_close < curr_upper
+            and prev_close > prev_lower
+            and curr_close < curr_lower
         ):
             self.position.close()
+
+        # elif (
+        #     prev_close > curr_close
+        #     and prev_macd_hist > curr_macd_hist
+        #     and prev_close > prev_upper
+        #     and curr_close < curr_upper
+        # ):
+        #     self.position.close()

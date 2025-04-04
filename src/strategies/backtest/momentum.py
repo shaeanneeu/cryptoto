@@ -39,12 +39,12 @@ class Momentum(Strategy):
         curr_close = self.data.Close[-1]
 
         if self.data.Momentum[-1] > 0:
-            if not self.position:
-                # self.buy()
-                sl = curr_close - self.sl_pct * curr_close
-                tp = curr_close + self.tp_pct * curr_close
-                self.buy(sl=sl, tp=tp)
+            # self.buy()
+            sl = curr_close - self.sl_pct * curr_close
+            tp = curr_close + self.tp_pct * curr_close
+            self.buy(sl=sl, tp=tp)
 
-        elif self.data.Momentum[-1] < 0:
-            if self.position:
-                self.position.close()
+        # Reverse of entry conditions as exit conditions
+        # Position, if any, should always be long, but check anyway
+        elif self.position.is_long and self.data.Momentum[-1] < 0:
+            self.position.close()

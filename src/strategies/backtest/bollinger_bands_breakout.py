@@ -23,10 +23,7 @@ class BollingerBandsBreakout(Strategy):
             sl = curr_close - self.sl_pct * curr_close
             tp = curr_close + self.tp_pct * curr_close
             self.buy(sl=sl, tp=tp)
-        else:
-            # Position, if any, should always be long, but check anyway
-            if (
-                self.position.is_long
-                and self.data.Upper_Band_200[-1] > self.data.Close[-1]
-            ):
-                self.position.close()
+        elif (
+            self.position.is_long and self.data.Upper_Band_200[-1] > self.data.Close[-1]
+        ):
+            self.position.close()

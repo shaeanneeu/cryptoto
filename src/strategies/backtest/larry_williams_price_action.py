@@ -29,10 +29,20 @@ class LarryWilliamsPriceAction(Strategy):
             tp = curr_close + self.tp_pct * curr_close
             self.buy(sl=sl, tp=tp)
 
-        elif (
-            self.data.Open[-1] < self.data.Close[-1]
-            and self.data.Low[-1] < self.data.Low[-2]
-            and self.data.High[-1] > self.data.High[-2]
-            and self.data.Close[-1] > self.data.High[-2]
+        elif ( # Reverse of entry conditions as exit conditions
+            # Position, if any, should always be long, but check anyway
+            self.position.is_long
+            and self.data.Open[-1] < self.data.Close[-1]
+            and self.data.High[-1] < self.data.High[-2]
+            and self.data.Low[-1] > self.data.Low[-2]
+            and self.data.Close[-1] > self.data.Low[-2]
         ):
             self.position.close()
+
+        # elif (
+        #     self.data.Open[-1] < self.data.Close[-1]
+        #     and self.data.Low[-1] < self.data.Low[-2]
+        #     and self.data.High[-1] > self.data.High[-2]
+        #     and self.data.Close[-1] > self.data.High[-2]
+        # ):
+        #     self.position.close()

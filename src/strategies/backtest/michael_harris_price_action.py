@@ -33,11 +33,18 @@ class MichaelHarrisPriceAction(Strategy):
             self.data.Low[-4],
         )
 
-        if h > h1 and h1 > l and l > h2 and h2 > l1 and l1 > h3 and h3 > l2 and l2 > l3:
-            self.position.close()
+        # if h > h1 and h1 > l and l > h2 and h2 > l1 and l1 > h3 and h3 > l2 and l2 > l3:
+        #     self.position.close()
 
         if l < l1 and l1 < h and h < l2 and l2 < h1 and h1 < l3 and l3 < h2 and h2 < h3:
             # self.buy()
             sl = curr_close - self.sl_pct * curr_close
             tp = curr_close + self.tp_pct * curr_close
             self.buy(sl=sl, tp=tp)
+
+        # Reverse of entry conditions as exit conditions
+        # Position, if any, should always be long, but check anyway
+        elif self.position.is_long and (
+            l > l1 and l1 > h and h > l2 and l2 > h1 and h1 > l3 and l3 > h2 and h2 > h3
+        ):
+            self.position.close()

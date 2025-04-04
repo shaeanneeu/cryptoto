@@ -33,8 +33,12 @@ class Scalping(Strategy):
             sl = curr_close - self.sl_pct * curr_close
             tp = curr_close + self.tp_pct * curr_close
             self.buy(sl=sl, tp=tp)
+
+        # Reverse of entry conditions as exit conditions
+        # Position, if any, should always be long, but check anyway
         elif (
-            all(self.data.EMA_50[-7:] < self.data.EMA_200[-7:])
+            self.position.is_long
+            and all(self.data.EMA_50[-7:] < self.data.EMA_200[-7:])
             and self.data.Close[-1] >= self.data.Upper_Band[-1]
         ):
             self.position.close()

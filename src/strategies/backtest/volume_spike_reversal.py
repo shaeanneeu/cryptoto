@@ -33,7 +33,11 @@ class VolumeSpikeReversal(Strategy):
             tp = curr_close + self.tp_pct * curr_close
             self.buy(sl=sl, tp=tp)
 
-        elif self.data.Close[-1] < self.data.Open[-1] and all(
-            self.data.EMA_50[-7:] > self.data.EMA_200[-7:]
+        # Reverse of entry conditions as exit conditions
+        # Position, if any, should always be long, but check anyway
+        elif (
+            self.position.is_long
+            and self.data.Close[-1] < self.data.Open[-1]
+            and all(self.data.EMA_50[-7:] > self.data.EMA_200[-7:])
         ):
             self.position.close()
