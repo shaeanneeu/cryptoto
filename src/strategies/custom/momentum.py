@@ -8,15 +8,15 @@ from models.strategy import Strategy
 class Momentum(Strategy):
     def generate_signals(self, df: pd.DataFrame) -> pd.DataFrame:
 
-        mom = ta.mom(self["Close"], length=10)
+        mom = ta.mom(df["Close"], length=10)
 
         def total_signal(df: pd.DataFrame, curr):
 
             pos = df.index.get_loc(curr)
-            if mom[pos] > 0:
+            if mom.iloc[pos] > 0:
                 return LONG
 
-            elif mom[pos] < 0:
+            elif mom.iloc[pos] < 0:
                 return SHORT
 
             return HOLD
