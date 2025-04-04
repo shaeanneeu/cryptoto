@@ -21,20 +21,25 @@ class RSIDivergence(Strategy):
             return
 
         close = self.data.Close.s
-        rsi = self.data.RSI
+        rsi = self.data.RSI.s
 
         recent_lows = close.iloc[-20:].nsmallest(2, keep="last").index
         # if len(recent_lows) < 2:
         #     return
 
         low1, low2 = recent_lows.sort_values()
-        if close[low1] > close[low2] and rsi[low1] < rsi[low2]:
+
+        if close.loc[low1] > close.loc[low2] and rsi.loc[low1] < rsi.loc[low2]:
             # self.buy()
             sl = curr_close - self.sl_pct * curr_close
             tp = curr_close + self.tp_pct * curr_close
             self.buy(sl=sl, tp=tp)
-        
-        elif self.position.is_long and close[low1] < close[low2] and rsi[low1] > rsi[low2]:
+
+        elif (
+            self.position.is_long
+            and close.loc[low1] < close.loc[low2]
+            and rsi.loc[low1] > rsi.loc[low2]
+        ):
             self.position.close()
 
         # recent_highs = close.iloc[-20:].nlargest(2, keep="last").index
