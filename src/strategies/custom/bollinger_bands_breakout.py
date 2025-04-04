@@ -32,9 +32,9 @@ class BollingerBandsBreakout(Strategy):
         def total_signal(df: pd.DataFrame, curr):
             pos = df.index.get_loc(curr)
 
-            if df["Close"][pos] > bbands["Upper_Band_200"][pos]:
+            if df["Close"].iloc[pos] > bbands["Upper_Band_200"].iloc[pos]:
                 return LONG
-            elif df["Close"][pos] < bbands["Lower_Band_200"][pos]:
+            elif df["Close"].iloc[pos] < bbands["Lower_Band_200"].iloc[pos]:
                 return SHORT
             return HOLD
 
