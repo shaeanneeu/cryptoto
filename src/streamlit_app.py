@@ -46,7 +46,7 @@ def plot_candlestick(asset_name: str, trades: pd.DataFrame):
             arrowsize=1,
             ax=0,
             ay=-40,
-            font=dict(color="blue")
+            font=dict(color="white")
         )
         
     # Layout settings
@@ -85,7 +85,8 @@ with col2:
 
 col1, col2, col3 = st.columns(3)
 with col1: 
-    unique_assets = trade_log['asset'].unique()
+    #unique_assets = trade_log['asset'].unique()
+    unique_assets = asset_strategies.index
     asset_name = st.selectbox("Select an asset:", unique_assets)
     asset_strat = asset_strategies.loc[asset_name, "strategy"]
     st.write(f"{asset_name} uses strategy {asset_strat}")
