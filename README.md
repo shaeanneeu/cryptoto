@@ -30,3 +30,15 @@ Installing packages (example):
 poetry add example-package-here
 ```
 
+## Dashboard 
+
+Change to correct directory
+```bash
+cd src
+```
+
+Run dashboard in terminal 
+```bash
+streamlit run streamlit_app.py 
+```
+
