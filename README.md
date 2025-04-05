@@ -15,7 +15,7 @@ pipx ensurepath
 
 ## Installation
 
-Install dependancies:
+Install dependencies:
 ```bash
 poetry install --no-root
 ```
