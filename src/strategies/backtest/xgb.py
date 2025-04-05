@@ -30,8 +30,6 @@ def add_features(prices):
     indicators['ema7'] = indicators['Close'].ewm(span=7, adjust=False).mean()
     indicators['ema10'] = indicators['Close'].ewm(span=10, adjust=False).mean()
     indicators['ema20'] = indicators['Close'].ewm(span=20, adjust=False).mean()
-    indicators['ema50'] = indicators['Close'].ewm(span=50, adjust=False).mean()
-    indicators['ema100'] = indicators['Close'].ewm(span=100, adjust=False).mean()
     return indicators.copy()
 
 
