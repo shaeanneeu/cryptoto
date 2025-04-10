@@ -8,8 +8,9 @@ class LarryWilliamsPriceAction(Strategy):
     Larry Williams' trading strategy.
     """
 
-    tp_pct = 0.1
-    sl_pct = 0.05
+    # Dummy variables that can be overridden
+    tp_pct = None
+    sl_pct = None
 
     def init(self):
         pass
@@ -24,9 +25,8 @@ class LarryWilliamsPriceAction(Strategy):
             and self.data.Low[-1] < self.data.Low[-2]
             and self.data.Close[-1] < self.data.Low[-2]
         ):
-            # self.buy()
-            sl = curr_close - self.sl_pct * curr_close
-            tp = curr_close + self.tp_pct * curr_close
+            sl = curr_close - self.sl_pct * curr_close if self.sl_pct else None
+            tp = curr_close + self.tp_pct * curr_close if self.tp_pct else None
             self.buy(sl=sl, tp=tp)
 
         elif (
