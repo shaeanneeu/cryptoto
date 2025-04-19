@@ -17,13 +17,13 @@ with col1:
     time_period = st.selectbox("Select a time period:", ["Validation (Jan - Feb) 📋", "Testing (March) 🔎"])
 
 # Metrics - Update if changed 
-m_testing = {'Annualised Return': -5.4, 'Sharpe': 0.013,
+m_testing = {'Annualised Return': -5.4, 'Sharpe': 0.19,
              'Max Drawdown': -10.56, 'Win Rate': 40.00, 
              'Annual Volatility': 65.86, 'Drawdown Patterns': 3,
              'Number of Trades': 18, 'Average Holding Period': 8.13,
              'Profit per trade': -203.83}
 
-m_validation = {'Annualised Return': 12.7, 'Sharpe': 0.024,
+m_validation = {'Annualised Return': 12.7, 'Sharpe': 0.35,
              'Max Drawdown': -12.73, 'Win Rate': 55.56, 
              'Annual Volatility': 56.78, 'Drawdown Patterns': 11,
              'Number of Trades': 45, 'Average Holding Period': 6.42,
