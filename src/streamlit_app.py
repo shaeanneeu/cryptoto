@@ -124,7 +124,7 @@ with col1:
     with col12:
         st.metric(label="Sharpe Ratio", value=f"{metrics['Sharpe']}")
     with col13: 
-        st.metric(label="Max Drawdown", value=f"{metrics['Max Drawdown']}")
+        st.metric(label="Max Drawdown [%]", value=f"{metrics['Max Drawdown']}")
     col21, col22, col23 = st.columns([1, 1, 1])
     with col21: 
         st.metric(label="Win Rate [%]", value=f"{metrics['Win Rate']}")
